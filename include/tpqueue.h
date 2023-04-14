@@ -31,7 +31,7 @@ class TPQueue {
                 temp = (++temp) % size;
             }
             for (int i = last; i != temp; i = (size + i - 1) % size) {
-                arr[(size + i - 1) % size] = arr[i];
+                  arr[i] = arr[(size + i - 1) % size];
             }
             count++;
             last = (last + 1) % size;
