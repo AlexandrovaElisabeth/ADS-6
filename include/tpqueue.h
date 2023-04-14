@@ -5,47 +5,50 @@
 template<typename T, int size>
 class TPQueue {
  private:
-     T arr[size];
-     int first, last, count;
+    T *arr;
+    int first, last, count;
+ 
  public:
-     TPQueue() : first(0), last(0), count(0){}
-     ~TPQueue() {
-         delete[] arr;
-     }
-     bool isEmpty() const {
-         return 0 == count;
-     }
-     bool isFull() const {
-         return size == count;
-     }
-     void push(const T& value) {
-         if (isFull()) {
-             throw std::string("Full");
-         }
-         else {
-             int temp = first;
-             while (temp != last && value.prior <= arr[temp].prior) {
-                 temp = (++temp) % size;
-             }
-             for (int i = last; i!=temp; i = (size + i - 1) % size) {
-                 arr[(i + 1) % size] = arr[i];
-             }
-             ++count;
-             last = (last + 1) % size;
-             arr[temp] = value;
-         }
-     }
-     const T& pop() {
-         if (isEmpty()) {
-             throw std::string("Empty");
-         }
-         else {
-             --count;
-             T t = arr[first];
-             first = (first + 1) % size;
-             return t;
-         }
-     }
+    TPQueue() : first(0), last(0), count(0) {
+        arr = new T[size];
+    }
+    ~TPQueue() {
+        delete[] arr;
+    }
+    bool isEmpty() const {
+        return 0 == count;
+    }
+    bool isFull() const {
+        return size == count;
+    }
+    void push(const T& value) {
+        if (isFull()) {
+            throw std::string("Full");
+        }
+        else {
+            int temp = first;
+            while (temp != last && value.prior <= arr[temp].prior) {
+                temp = (++temp) % size;
+            }
+            for (int i = last; i!=temp; i = (size + i - 1) % size) {
+                arr[(i + 1) % size] = arr[i];
+            }
+            ++count;
+            last = (last + 1) % size;
+            arr[temp] = value;
+        }
+    }
+    const T& pop() {
+        if (isEmpty()) {
+            throw std::string("Empty");
+        }
+        else {
+            --count;
+            T t = arr[first];
+            first = (first + 1) % size;
+            return t;
+        }
+    }
 };
 
 struct SYM {
